@@ -1,0 +1,28 @@
+import RPi.GPIO as GPIO
+import Adafruit_DHT   
+import time
+import datetime
+from time import sleep
+
+sensor = Adafruit_DHT.DHT11
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+
+GPIO.setup(40, GPIO.OUT)
+GPIO.setup(38, GPIO.OUT)
+
+while(1):
+	humid, temp = Adafruit_DHT.read(11, 4);
+        if humid is not None and temp is not None:
+       	     print("Last valid input: " + str(datetime.datetime.now()));
+             print("Temperature: {0:0.1f} C Humidity: {1:0.1f}").format(temp, humid);
+		        	
+	     if temp>=33:
+		GPIO.output(40,1)
+		time.sleep(1)
+    		GPIO.output(38,0)
+             else:
+    		GPIO.output(40,0)
+		time.sleep(1)
+      		GPIO.output(38,1)
